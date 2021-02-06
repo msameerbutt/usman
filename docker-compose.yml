@@ -10,11 +10,36 @@ services:
   php:
     build:
       context: ./docker/php-fpm
+    volumes:
+      - ./src:/var/www      
+    networks:
+      - usman-network      
 
   nginx:
     build:
       context: ./docker/nginx        
+    volumes:
+      - ./src:/var/www
+      - ./docker/nginx/server.conf:/etc/nginx/conf.d/server.conf:cached
+    ports:
+      ## My Computer Port: Docker Port 
+      - "8080:80"
+    networks:
+      - usman-network       
 
   database:    
     build:
-      context: ./docker/database  
+      context: ./docker/database
+    ports:
+      ## My Computer Port: Docker Port 
+      - "3307:3306"    
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=usman-db
+      - MYSQL_USER=usman-user
+      - MYSQL_PASSWORD=usman-password
+      - MYSQL_ROOT_PASSWORD=abc   
+      - MYNAME=USMAN-BUTT
+    networks:
+      - usman-network    
