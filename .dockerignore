@@ -1,0 +1,12 @@
+# ignore .git and .cache folders
+node_modules
+npm-debug.log
+Dockerfile
+.gitignore
+.dockerignore
+.git
+.cache
+
+*.md
+!README.md
+app_data
